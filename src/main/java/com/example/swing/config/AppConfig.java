@@ -8,6 +8,8 @@ import com.example.swing.view.AdminMenuPage;
 import com.example.swing.view.CustomerMenuView;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import com.example.swing.controller.AdminOrderController;
+import com.example.swing.view.AdminOrderManagementPage;
 
 @Configuration
 public class AppConfig {
@@ -23,8 +25,8 @@ public class AppConfig {
     }
 
     @Bean
-    public OrderDAO orderDAO() {
-        return new OrderDAO();
+    public OrderDAO orderDAO(OrderItemDAO orderItemDAO) {
+        return new OrderDAO(orderItemDAO);
     }
 
     @Bean
@@ -35,6 +37,11 @@ public class AppConfig {
     @Bean
     public CustomerMenuView customerMenuView() {
         return new CustomerMenuView();
+    }
+
+    @Bean
+    public AdminOrderManagementPage adminOrderManagementPage(AdminOrderController controller) {
+        return new AdminOrderManagementPage(controller);
     }
 }
 

@@ -23,6 +23,8 @@ public class LoginFrame extends JFrame {
     private AdminMenuPage adminMenuPage;
 
     @Autowired
+    private AdminOrderManagementPage adminOrderManagementPage;
+    @Autowired
     private CustomerMenuController customerMenuController;
 
     public LoginFrame() {
@@ -64,16 +66,22 @@ public class LoginFrame extends JFrame {
                 String password = new String(passwordField.getPassword());
 
                 try {
-                    String role = authService.login(email, password);
-                    if (role == null) {
-                        JOptionPane.showMessageDialog(null, "Invalid credentials!");
-                    } else if ("admin".equals(role)) {
-                        adminMenuPage.initialize(); // 打开管理员菜单
-                        dispose(); // 关闭当前界面
-                    } else {
-                        customerMenuController.initialize();
-                        dispose(); // 关闭当前界面
-                    }
+                    // TEST: adminOrderManagementPage
+                    adminOrderManagementPage.initialize();
+                    dispose(); // 关闭当前界面
+                    // TEST: admin login result
+                    // adminMenuPage.initialize(); // 打开管理员菜单
+                    // dispose(); // 关闭当前界面
+                    // String role = authService.login(email, password);
+                    // if (role == null) {
+                    //     JOptionPane.showMessageDialog(null, "Invalid credentials!");
+                    // } else if ("admin".equals(role)) {
+                    //     adminMenuPage.initialize(); // 打开管理员菜单
+                    //     dispose(); // 关闭当前界面
+                    // } else {
+                    //     customerMenuController.initialize();
+                    //     dispose(); // 关闭当前界面
+                    // }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error occurred while logging in.");

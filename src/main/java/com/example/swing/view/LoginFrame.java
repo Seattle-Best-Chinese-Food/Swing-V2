@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 
 @Component
 public class LoginFrame extends JFrame {
+    private AdminDashboard adminDashboard;
 
     @Autowired
     private AuthService authService;
@@ -66,24 +67,18 @@ public class LoginFrame extends JFrame {
                 String password = new String(passwordField.getPassword());
 
                 try {
-                    // TEST: adminOrderManagementPage
-                    adminOrderManagementPage.initialize();
-                    dispose(); // 关闭当前界面
-                    // TEST: admin login result
-                    // adminMenuPage.initialize(); // 打开管理员菜单
-                    // dispose(); // 关闭当前界面
-                    // String role = authService.login(email, password);
-                    // if (role == null) {
-                    //     JOptionPane.showMessageDialog(null, "Invalid credentials!");
-                    // } else if ("admin".equals(role)) {
-                    //     adminMenuPage.initialize(); // 打开管理员菜单
-                    //     dispose(); // 关闭当前界面
-                    // } else {
-                    //     customerMenuController.initialize();
-                    //     dispose(); // 关闭当前界面
-                    // }
+                    String role = authService.login(email, password);
+                    if (role == null) {
+                        JOptionPane.showMessageDialog(null, "Invalid credentials!");
+                    } else if ("admin".equals(role)) {
+                        adminDashboard = new AdminDashboard(adminMenuPage, adminOrderManagementPage);
+                        adminDashboard.initialize();
+                        dispose(); // 关闭当前界面
+                    } else {
+                        customerMenuController.initialize();
+                        dispose(); // 关闭当前界面
+                    }
                 } catch (Exception ex) {
-                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Error occurred while logging in.");
                 }
             }

@@ -9,6 +9,7 @@ import com.example.swing.view.CustomerMenuView;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.example.swing.controller.AdminOrderController;
+import com.example.swing.controller.CustomerMenuController;
 import com.example.swing.view.AdminOrderManagementPage;
 
 @Configuration
@@ -18,6 +19,7 @@ public class AppConfig {
     public AdminMenuPage adminMenuPage(AdminMenuController controller) {
         return new AdminMenuPage(controller);  // 传递构造参数
     }
+
 
     @Bean
     public DishDAO dishDAO() {
@@ -34,10 +36,10 @@ public class AppConfig {
         return new OrderItemDAO();
     }
 
-    @Bean
-    public CustomerMenuView customerMenuView() {
-        return new CustomerMenuView();
-    }
+    // @Bean
+    // public CustomerMenuView customerMenuView() {
+    //     return new CustomerMenuView();
+    // }
 
     @Bean
     public AdminOrderManagementPage adminOrderManagementPage(AdminOrderController controller) {

@@ -1,9 +1,6 @@
 package com.example.swing.view;
 
 import javax.swing.*;
-
-import org.springframework.stereotype.Component;
-
 import java.awt.*;
 import java.net.URL;
 import java.util.HashMap;
@@ -12,16 +9,18 @@ import com.example.swing.model.Dish;
 import com.example.swing.utils.ButtonUtils;
 import java.awt.event.ActionListener;
 
-@Component
 public class CustomerMenuView {
     private JFrame frame;
     private JPanel cardPanel;
     private JButton viewOrderButton;
     private Map<Dish, JButton> orderButtons = new HashMap<>(); // Store buttons associated with each dish
 
+    public CustomerMenuView() {
+        // initialize();
+    }
+
     public void initialize() {
-        System.out.println("CustomerMenuView.initialize() called");
-        SwingUtilities.invokeLater(this::createAndShowGUI);
+        createAndShowGUI();
     }
 
     public JFrame getFrame() {
@@ -29,18 +28,17 @@ public class CustomerMenuView {
     }
 
     private void createAndShowGUI() {
-        System.out.println("CustomerMenuView.createAndShowGUI() called");
         frame = new JFrame("Customer Menu");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        cardPanel = new JPanel();
+        System.out.println(cardPanel + "----cardPanel init---");
         initComponents();
 
         frame.setVisible(true);
     }
 
     private void initComponents() {
-        System.out.println("initComponents has been used");
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
@@ -48,7 +46,7 @@ public class CustomerMenuView {
         menuLabel.setFont(new Font("Arial", Font.BOLD, 24));
         panel.add(menuLabel, BorderLayout.NORTH);
 
-        cardPanel = new JPanel();
+        
         cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS));
         cardPanel.setBackground(Color.WHITE);
 
@@ -65,6 +63,7 @@ public class CustomerMenuView {
     }
 
     public void addDishCard(JPanel card) {
+        System.out.println( cardPanel + "----cardPanel---");
         cardPanel.add(card);
         cardPanel.add(Box.createRigidArea(new Dimension(0, 10)));
     }

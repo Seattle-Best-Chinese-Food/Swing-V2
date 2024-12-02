@@ -5,6 +5,9 @@ import com.example.swing.controller.CustomerMenuController;
 import com.example.swing.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.example.swing.dao.DishDAO;
+import com.example.swing.dao.OrderDAO;
+import com.example.swing.dao.OrderItemDAO;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +16,17 @@ import java.awt.event.ActionListener;
 @Component
 public class LoginFrame extends JFrame {
     private AdminDashboard adminDashboard;
+    private CustomerMenuView customerMenuView;
+    private CustomerMenuController customerMenuController;
+
+    @Autowired
+    private DishDAO dishDAO;
+
+    @Autowired
+    private OrderDAO orderDAO;
+
+    @Autowired
+    private OrderItemDAO orderItemDAO;
 
     @Autowired
     private AuthService authService;
@@ -25,8 +39,6 @@ public class LoginFrame extends JFrame {
 
     @Autowired
     private AdminOrderManagementPage adminOrderManagementPage;
-    @Autowired
-    private CustomerMenuController customerMenuController;
 
     public LoginFrame() {
         setTitle("Login");
@@ -68,6 +80,7 @@ public class LoginFrame extends JFrame {
 
                 try {
                     String role = authService.login(email, password);
+                    System.out.println(role + " role");
                     if (role == null) {
                         JOptionPane.showMessageDialog(null, "Invalid credentials!");
                     } else if ("admin".equals(role)) {
@@ -75,7 +88,10 @@ public class LoginFrame extends JFrame {
                         adminDashboard.initialize();
                         dispose(); // 关闭当前界面
                     } else {
-                        customerMenuController.initialize();
+                        customerMenuView = new CustomerMenuView();
+                        customerMenuView.initialize();
+                        customerMenuController = new CustomerMenuController(dishDAO, customerMenuView, orderDAO,
+                                orderItemDAO);
                         dispose(); // 关闭当前界面
                     }
                 } catch (Exception ex) {
@@ -93,5 +109,3 @@ public class LoginFrame extends JFrame {
         });
     }
 }
-
-
